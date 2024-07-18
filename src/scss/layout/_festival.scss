@@ -1,0 +1,24 @@
+@use 'base/variables' as *;
+@use 'base/mixins' as *;
+
+.sobre-festival {
+    @include contenedor;
+    @include tablet {
+        @include grid(2);
+    }
+}
+
+.contenido-festival {
+    margin-top: 2rem;
+    
+    h2 {
+        margin-bottom: 2rem;
+        animation: bounce;
+        animation-duration: 2s;
+    }
+
+    .fecha {
+        color: $verde;
+        font-weight: 700;
+    }
+}
