@@ -1,7 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
     crearGaleria()
-
+    navegacionFija()
+    resaltarEnlace()
+    scrollNav()
 })
+
+function navegacionFija() {
+    const header = document.querySelector('.header')
+    const sobreFestival = document.querySelector('.sobre-festival')
+
+    document.addEventListener('scroll', function() {
+        if(sobreFestival.getBoundingClientRect().bottom < 1) {
+            header.classList.add('fixed');
+        } else {
+            header.classList.remove('fixed');
+        } 
+    })
+}
 
 function crearGaleria(){
     const CANTIDAD_IMAGENES = 16
@@ -15,8 +30,8 @@ function crearGaleria(){
         imagen.onclick = function() {
             mostrarImagen(i)
         }
-        
-        galeria.appendChild(imagen)
+
+       galeria.appendChild(imagen)
     }
 }
 
@@ -39,7 +54,6 @@ function mostrarImagen(i) {
 
     modal.appendChild(imagen)
     modal.appendChild(cerrarModalBtn)
-    
 
     // Agregar al HTML
     const body = document.querySelector('body')
@@ -56,4 +70,43 @@ function cerrarModal() {
         const body = document.querySelector('body')
         body.classList.remove('overflow-hidden')
     }, 500);
+}
+
+function resaltarEnlace() {
+        document.addEventListener('scroll', function () {
+        const sections = document.querySelectorAll('section')
+        const navLinks = document.querySelectorAll('.navegacion-principal a')
+
+        let actual = '';
+        sections.forEach ( section => {
+              const sectionTop = section.offsetTop
+              const sectionHeight = section.clientHeight
+
+           if(window.scrollY >=(sectionTop - sectionHeight / 3 )) {
+              actual = section.id
+           }
+        })
+
+        navLinks.forEach(link => {
+            if(link.getAttribute('href') === '#' + actual) {
+                   link.classList.add('active')
+              } else {
+                 link.classList.remove('active')
+              }
+         })
+    })
+}
+
+function scrollNav() {
+    const navLinks = document.querySelectorAll('.navegacion-principal a')
+    
+    navLinks.forEach( link => {
+        link.addEventListener('click', e => {
+            e.preventDefault()
+            const sectionScroll = e.target.getAttribute('href')
+            const section = document.querySelector(sectionScroll)
+
+            section.scrollIntoView({behavior: 'smooth'})
+        })
+    })
 }
